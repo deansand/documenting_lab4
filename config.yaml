@@ -1,0 +1,33 @@
+dataset:
+  enabled: true
+  type: socrata_csv
+  url: https://data.cityofnewyork.us/resource/5ucz-vwe8.csv
+  output_path: ./data/nyc_shootings.csv
+  page_size: 10000
+  reuse_existing: true
+
+reader:
+  type: csv
+  input_path: ./data/nyc_shootings.csv
+  encoding: utf-8
+  delimiter: ","
+
+output:
+  # Allowed values: console | file | kafka | redis
+  type: file
+
+  file:
+    output_path: ./data/output.txt
+    mode: w
+    encoding: utf-8
+
+  kafka:
+    bootstrap_servers:
+      - localhost:9092
+    topic: dataset-lines
+
+  redis:
+    host: localhost
+    port: 6379
+    db: 0
+    list_key: dataset:lines
